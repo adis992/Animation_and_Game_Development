@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Css Transitions</title>
+    <style>
+        div {
+            background-color: #A2687E;
+            color: white;
+            padding: 16px;
+            margin: 32px auto;
+            font-family: sans-serif;
+            font-size: 28px;
+            width: 250px;
+            height: 180px;
+            border-radius: 8px;
+            transition: width 1s;
+            /* 1s = 1000ms moze se isto i height transicionirati */
+            text-decoration: line-through transparent;
+            /* line-through = preko teksta se crta linija */
+            /* transparent = linija je prozirna */
+            transition: text-decoration 0.5s, background-color 0.5s, color 0.5s;
+            /* 0.5s = 500ms */
+
+        }
+
+        div:hover {
+            /* hover = kad se mis nalazi iznad elementa automatski se prosiruje */
+            width: 320px;
+        }
+
+        .deleted {
+            text-decoration: line-through;
+            background-color: #165cdd;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="my-div">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    <script>
+        let myDiv = document.getElementById('my-div');
+        myDiv.onclick = function () {
+            if (myDiv.classList.contains('deleted')) {
+                myDiv.classList.remove('deleted');
+            } else {
+                myDiv.classList.add('deleted');
+            }
+        }
+    </script>
+</body>
+
+</html>

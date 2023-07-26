@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Transition example - Popup</title>
+    <style>
+        body {
+            background: #efefef;
+            height: 100vh;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            color: #c7c7c7;
+            font-weight: 200;
+            text-align: center;
+            position: absolute;
+            top: 45%;
+            width: 100%;
+        }
+
+        h2 {
+            color: #4f95ff;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #001818;
+        }
+
+        #main-container {
+            position: absolute;
+            overflow: hidden;
+            top: 10%;
+            right: 10%;
+            bottom: 85px;
+            left: 10%;
+            padding: 20px 50px;
+            display: block;
+            border-radius: 4px;
+            transform: translateY(20px);
+            transition: all 0.5s;
+            visibility: hidden;
+        }
+
+        #main-container .content {
+            opacity: 0;
+        }
+
+        #main-container:before {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background: white;
+            content: "";
+            bottom: 10px;
+            left: 50%;
+            top: 95%;
+            color: #fff;
+            border-radius: 50%;
+            transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        #main-container.active {
+            display: block;
+            visibility: visible;
+            box-shadow: 2px 3px 16px silver;
+            transition: all 600ms;
+            transform: translateY(0px);
+            transition: all 0.5s;
+        }
+
+        #main-container.active:before {
+            height: 2000px;
+            width: 2000px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            margin-left: -1000px;
+            margin-top: -1000px;
+            display: block;
+            transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        #main-container.active .content {
+            position: relative;
+            z-index: 1;
+            opacity: 1;
+            transition: all 600ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        }
+
+
+        #button {
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            background-color: #4F95FF;
+            position: absolute;
+            display: block;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            bottom: 64px;
+
+            transform: rotate(0deg);
+            transition: transform 0.5s;
+        }
+
+        #button::after {
+            content: " ";
+            position: absolute;
+            display: block;
+            background-color: #fff;
+            height: 6px;
+            margin-top: -3px;
+            top: 50%;
+            left: 12px;
+            right: 12px;
+            z-index: 9;
+        }
+
+        #button::before {
+            content: " ";
+            position: absolute;
+            display: block;
+            background-color: #fff;
+            width: 6px;
+            margin-left: -3px;
+            left: 50%;
+            top: 12px;
+            bottom: 12px;
+            z-index: 9;
+        }
+
+        a#button:hover {
+            text-decoration: none;
+            background: #2198ff;
+        }
+
+        a#button.active {
+            transform: rotate(135deg);
+            transition: transform 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='main-container'>
+        <div class='content'>
+            <h2>Hello World!</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt justo in interdum eleifend.
+                Quisque pharetra ipsum ex, vel eleifend magna iaculis eu. Aliquam ultricies sodales faucibus. Maecenas
+                egestas lorem eu dignissim accumsan. Ut viverra tortor facilisis enim ultrices bibendum. Quisque
+                faucibus enim nec urna dapibus rutrum. Donec tempus dolor nec nunc sagittis bibendum. Phasellus lacinia
+                ipsum quis odio efficitur, at mollis mi pretium. Aenean tincidunt quis neque et varius. Vestibulum ante
+                ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam maximus volutpat nibh, at
+                tempus nisl venenatis et.</p>
+            <p>Aenean volutpat ipsum et diam interdum interdum. Vestibulum elementum dui arcu. Mauris consequat, tortor
+                ac tincidunt ullamcorper, turpis nisi lobortis metus, eu auctor lectus quam in urna. Fusce nec metus
+                fringilla, congue purus gravida, eleifend erat. Pellentesque viverra sapien a nisi lacinia, id mollis
+                erat mattis. Ut non lorem interdum magna sagittis mollis. Sed auctor, metus nec condimentum convallis,
+                sem mauris lobortis nisl, consectetur gravida dolor ligula eu dolor. Aenean est tellus, gravida non
+                consequat eget, rhoncus a neque. Nam ac est elit. Vivamus quam nulla, placerat vitae magna ac, tempor
+                sodales ante. Aliquam in elementum dui, eget lobortis eros.</p>
+        </div>
+    </div>
+    <a id="button" href='#'></a>
+
+
+    <script>
+
+        document.getElementById("button").onclick = function () {
+            document.getElementById("main-container").classList.toggle("active"); //dodava klasu active
+            document.getElementById("button").classList.toggle("active");
+        };
+
+
+    </script>
+</body>
+
+</html>
