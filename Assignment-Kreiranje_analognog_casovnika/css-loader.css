@@ -1,0 +1,68 @@
+body {
+    background: #333;
+}
+
+#main-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#first-half {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 50px 50px 0 0;
+    border-color: #ffffff transparent transparent transparent;
+    margin: 0 auto;
+    animation: anticlockwise 1s ease-in-out infinite normal;
+}
+
+#second-half {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 50px 50px;
+    border-color: transparent transparent #fa0b02 transparent;
+    margin: -50px auto 0;
+    animation: clockwise 1s ease-in-out infinite alternate;
+}
+
+@keyframes anticlockwise {
+    0% {
+        transform: rotate(-360deg);
+    }
+
+    100% {}
+}
+
+@keyframes clockwise {
+    0% {
+        transform: rotate(360deg);
+    }
+
+    100% {}
+}
+
+#loading-text {
+    color: #fff;
+    font-family: sans-serif;
+    margin: 30px auto;
+    text-align: center;
+    font-weight: 100;
+    letter-spacing: 6px;
+}
+
+/* CSS za sakrivanje i prikazivanje elemenata */
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}

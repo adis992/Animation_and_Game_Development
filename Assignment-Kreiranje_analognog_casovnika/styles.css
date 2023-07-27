@@ -1,15 +1,23 @@
-body {
-    background-color: #dad4d4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+    body {
+        background-color: rgb(41, 71, 128);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
 
-#clock {
-    width: 600px;
-    height: 600px;
-    border: 5px solid #000000;
-    border-radius: 50%;
-}
+    h3 {
+        text-align: center;
+    }
+
+    /* CSS za časovnik */
+    #clock {
+        width: 600px;
+        height: 600px;
+        border: 5px solid #000000;
+        border-radius: 50%;
+    }

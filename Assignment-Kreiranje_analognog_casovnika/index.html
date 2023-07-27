@@ -1,13 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casovnik sa Loaderom</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="css-loader.css">
 </head>
 
 <body>
-    <canvas id="clock" width="400" height="400"></canvas>
+    <div id="main-container">
+        <!-- Loader elementi -->
+        <div id="loader" class="visible">
+            <div id="first-half"></div>
+            <div id="second-half"></div>
+            <h4 id="loading-text">Učitavanje casovnika...</h4>
+        </div>
+
+        <!-- Casovnik elementi -->
+        <div id="clock-container" class="hidden">
+            <h3>Vremenska zona na lokaciji Sarajevo (GMT+2)</h3>
+            <canvas id="clock" width="400" height="400"></canvas>
+        </div>
+    </div>
+
     <script src="clock.js"></script>
 </body>
+<!--https://adis992.github.io/Animation_and_Game_Development/Assignment-Kreiranje_analognog_casovnika/index.html-->
+<!--GITHUB PAGES-->
 
 </html>
