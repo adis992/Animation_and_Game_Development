@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animacija skenera-radara</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = draw;
+        function draw() {
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+                let ctx = myCanvas.getContext('2d');
+
+
+                update(ctx);
+
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+        let angle = 0;
+
+        function update(ctx) {
+            ctx.save();
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            //crtanje kruga
+            ctx.beginPath();
+            ctx.arc(200, 150, 120, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.stroke();
+
+
+
+            //crtanje linije iz sredine kruga koja se krece
+            ctx.translate(200, 150);
+            ctx.rotate(Math.PI / 180 * angle);
+            //pa opet vratimo pocetno
+            ctx.translate(-200, -150);
+
+            //crtanje linije iz sredine kruga
+            ctx.beginPath();
+            ctx.moveTo(200, 150);
+            ctx.lineTo(200, 30);
+            ctx.closePath();
+            ctx.stroke();
+
+
+
+            ctx.restore(); //ovo moramo reset cijeli koordinatni sistem da bi se krug vracao na pocetnu poziciju
+
+            angle++;  //ovo je za rotaciju linije i znaci da se svaki put povecava za 1 stupanj
+
+            requestAnimationFrame(function () {  //ovo sluzi za animaciju i da se ne vrti u krug
+                update(ctx);
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

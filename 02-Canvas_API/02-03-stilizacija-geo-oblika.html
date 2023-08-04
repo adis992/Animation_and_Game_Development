@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stilizacija geometrijskih oblika-bojanje</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = draw;
+
+
+
+        function draw() {
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+                let ctx = myCanvas.getContext('2d');
+                ctx.beginPath();  //pocetak crtanja
+                ctx.arc(60, 60, 50, 0, 2 * Math.PI);  //crtanje kruga
+                ctx.fillStyle = "red";  //boja kruga u crveno
+                ctx.fill();  //bojenje kruga, i fill style ide posle fill arc-a a pre fill-a
+                ctx.beginPath();
+                ctx.rect(100, 100, 140, 80);  //crtanje pravougaonika i on ce biti ispunjen bojom koja je definisana u fillStyle
+                ctx.fillStyle = "blue";
+                ctx.fill();
+                //da bi daku boju kruga jednu a pravugaonika drugu moramo poslije jednog elem kucati  ctx.beginPath();  //pocetak crtanja
+                //providnost se definise sa ctx.globalAlpha = 0.5;  //providnost 0.5 je poluprovidan
+                //gradijenti se koriste za bojenje elemenata
+                //gradijent se kreira sa ctx.createLinearGradient(0, 0, 200, 0);  //prvi parametar je x koordinata pocetka gradijenta, drugi je y koordinata pocetka gradijenta, treci je x koordinata kraja gradijenta, cetvrti je y koordinata kraja gradijenta
+                /*primjer gradijenta 
+                let grd = ctx.createLinearGradient(0, 0, 200, 0);
+                grd.addColorStop(0, "red");  //prvi parametar je pozicija gradijenta, drugi je boja
+                grd.addColorStop(1, "white");
+                ctx.fillStyle = grd;  
+                */
+
+                //Radijalni gradijent se kreira sa ctx.createRadialGradient(75, 50, 5, 90, 60, 100);  //prvi parametar je x koordinata centra kruga, drugi je y koordinata centra kruga, treci je radijus kruga, cetvrti je x koordinata centra kruga, peti je y koordinata centra kruga, sesti je radijus kruga
+                /*primjer radijalnog gradijenta
+                let grd = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
+                grd.addColorStop(0, "red");  //prvi parametar je pozicija gradijenta, drugi je boja
+                grd.addColorStop(1, "white");
+                ctx.fillStyle = grd;  
+                */
+
+
+                //
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+    </script>
+</body>
+
+</html>

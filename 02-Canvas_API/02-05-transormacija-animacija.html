@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas State and Transformations</title>
+    <style>
+        #my-canvas {
+            border: #ff0303 2px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = draw;
+        function draw() {
+
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+                let ctx = myCanvas.getContext('2d');
+
+                ctx.fillStyle = "#ff0303";  //boja pozadine
+                ctx.shadowOffsetX = 4;  //sjenka
+                ctx.shadowOffsetY = 4;  //sjenka
+                ctx.shadowBlur = 4;  //ovo je blur ili zamucenje slike
+                ctx.shadowColor = "rgba(0,0,0,0.5)";  //boja sjene
+
+                ctx.fillRect(10, 10, 200, 200);  //prvi i drugi parametar su koordinate gornjeg lijevog ugla, a treci i cetvrti su sirina i visina
+
+                ctx.fillStyle = "black"
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.shadowBlur = 0;
+                ctx.shadowColor = "rgba(0,0,0,0)";
+
+                ctx.fillRect(30, 30, 160, 160);
+
+                //drugu kocku odnosno crnu crtamo samo ovako i na ovaj nacin i ovim redoslijedom
+                //znaci mozemo  samo pisati ctx.fillRect(30, 30, 160, 160); bez sjenke i blura ai moramo prije svega
+                //ukucati sljedece ctx.save(); poslije 2d konteksta i prije fillRect i poslije fillRect ukucati ctx.restore(); na kraju pa onda pisati novi fillrect
+                //ctx.save(); i ctx.restore(); se koriste za cuvanje i vracanje stanja canvasa
+
+
+                /*Ako bi smo htjeli 3 kvadrata u jednom kvadratu ili ukupan zbir 4 kv onda cemo ovako
+
+                ctx.save();
+ 
+                ctx.fillStyle = "#ECC93E";
+                ctx.fillRect(10, 10, 200, 200);
+                
+                ctx.save();
+                
+                ctx.fillStyle = "#DC7769";
+                ctx.fillRect(30, 30, 160, 160);
+                
+                ctx.restore();
+                ctx.fillRect(50, 50, 120, 120);
+                
+                ctx.restore();
+                ctx.fillRect(70, 70, 80, 80);
+                
+                
+                */
+
+                //IMAMO 3 VRSTE TRANSFORMACIJA  A TO SU
+                //translacija(pomeranje),
+                //rotacija,
+                //promena veličine.
+
+
+
+
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

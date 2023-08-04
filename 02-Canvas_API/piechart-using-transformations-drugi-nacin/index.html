@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Transformations - Pie Chart Example</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = draw;
+
+        function draw() {
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+
+                let ctx = myCanvas.getContext('2d');
+
+                makePieChart(ctx, [20, 10, 10, 5, 30, 5, 20]);
+
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+        function makePieChart(ctx, shares) {
+
+            let sum = shares.reduce((a, b) => a + b, 0);
+
+            if (sum !== 100)
+                throw new Error("Sum of all shares must be 100.");
+
+            for (let i = 0; i < shares.length; i++) {
+
+                let angle = (Math.PI / 180) * shares[i] * 3.6;
+
+                let red = Math.floor(Math.random() * 200) + 50;
+                let green = Math.floor(Math.random() * 200) + 50;
+                let blue = Math.floor(Math.random() * 200) + 50;
+
+                ctx.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+
+                ctx.beginPath();
+                ctx.arc(200, 150, 120, 0, angle);
+                ctx.lineTo(200, 150);
+                ctx.fill();
+
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.arc(200, 150, 120, 0, angle);
+                ctx.lineTo(200, 150);
+                ctx.closePath();
+                ctx.stroke();
+
+                ctx.translate(200, 150);
+                ctx.rotate(angle);
+                ctx.translate(-200, -150);
+
+            }
+
+        }
+    </script>
+</body>
+
+</html>

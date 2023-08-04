@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Intro-Crtanje grafike unutar canvas elementa</title>
+    <style>
+        #my-canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your browser does not support the canvas element.
+    </canvas>
+    <script>
+        //canvas je raster grafika
+        window.onload = draw; //ovo ce se izvrsiti tek kada se ucita stranica i ova ispod funkcija
+        function draw() {
+            let myCanvas = document.getElementById('my-canvas');
+
+
+            if (myCanvas.getContext) {
+                let ctx = myCanvas.getContext('2d');
+
+                //ctx.fillStyle = 'rgb(200,0,0)';  //fillStyle je svojstvo objekta ctx
+                //ctx.fillRect(10, 10, 50, 50); //fillRect je metoda objekta ctx a parametri su x,y,width,height    
+                //fill rect je sa ispunom boje a strokeRect je samo kontura samo ivice
+                //clearRect je metoda za brisanje dela canvasa
+                //ctx.clearRect(20, 20, 20, 20);
+                ctx.beginPath(); //ovo je pocetak crtanja
+                ctx.moveTo(0, 150); //pocetna tacka
+                ctx.lineTo(25, 150); //krajnja tacka
+                ctx.moveTo(50, 150); //pocetna tacka    
+                ctx.lineTo(75, 150);
+                ctx.moveTo(100, 150);
+                ctx.lineTo(125, 150);
+                ctx.moveTo(150, 150);
+                ctx.lineTo(175, 150);
+                ctx.moveTo(200, 150);
+                ctx.lineTo(225, 150);
+                ctx.moveTo(250, 150);
+                ctx.lineTo(275, 150);
+                ctx.moveTo(300, 150);
+                ctx.lineTo(325, 150);
+                ctx.moveTo(350, 150);
+                ctx.lineTo(375, 150);
+                ctx.moveTo(400, 150);
+                ctx.stroke();//ovo je kraj crtanja
+                //ovo sto smo crtalidobit cemo kroz sredinu horizontalnu isprekidanu liniju u canvas elementu
+                /*crtanje izlomljeih linija ida ovako
+                ctx.beginPath();
+                ctx.moveTo(0, 150);
+                ctx.lineTo(50, 180);
+                ctx.lineTo(100, 120);
+                ctx.lineTo(150, 180);
+                ctx.lineTo(200, 120);
+                ctx.lineTo(250, 180);
+                ctx.lineTo(300, 120);
+                ctx.lineTo(350, 180);
+                ctx.lineTo(400, 150);
+                ctx.stroke();*/
+                /*crtanje trougla ovako
+                ctx.beginPath();
+                ctx.moveTo(200, 40);
+                ctx.lineTo(300, 200);
+                ctx.lineTo(100, 200);
+                ctx.fill();
+                */
+                /*krug i osjecen dio kruga bez konture
+                ctx.beginPath();
+                ctx.arc(200, 150, 120, 0, 3 * Math.PI/2);
+                ctx.stroke();
+                */
+            } else {
+                alert("canvas - unsupported code here");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

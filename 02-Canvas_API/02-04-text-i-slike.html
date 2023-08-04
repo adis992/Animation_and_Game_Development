@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crtanje slike i pisanje texta u canvasu</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = draw;
+
+
+
+        function draw() {
+
+            let myCanvas = document.getElementById("my-canvas");
+
+
+            if (myCanvas.getContext) {
+                var ctx = myCanvas.getContext('2d');
+
+                let img = new Image();
+
+                img.addEventListener('load', function () {  //load event se desava kada se ucita slika
+                    //ctx.drawImage(img, 50, 50);  //metoda drawImage crta sliku, prvi parametar je slika, drugi i treci su koordinate gornjeg lijevog ugla slike, cetvrti i peti su sirina i visina slike
+                    //50,50 je gornji lijevi ugao slike
+                    //uu canvasu uvijek ucitava kakva i jest slika  a moze se i to editovati
+                    //da bih smanjio ili povecao sliku kucamo ovako ctx.drawImage(img, 50, 50, 100, 100); 100,100 je sirina i visina slike
+                    //dravimage se moze obaviti i na drugi nacin sa img.width i img.height /2 da bih smanjio sliku na pola
+                    //
+                    ctx.drawImage(img, (img.width / 9) * 2, 0, img.width / 9, img.height, 25, 25, img.width / 9, img.height);
+                    //ovo iznad znaci da se slika crta na 25,25 i da je sirina i visina slike img.width / 9, img.height
+
+                }, false);
+
+                //img.src = 'enemy.png';
+                img.src = 'runner.png';  //sada crtamo drugu sliku
+
+                //crtanje texta u canvasu se radi sa metodom fillText i strokeText i ima iste parametre kao i u css-u
+                //ctx.fillText("Hello World", 50, 50);  //prvi parametar je text, drugi i treci su koordinate gornjeg lijevog ugla texta
+
+
+
+
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+    </script>
+</body>
+
+</html>

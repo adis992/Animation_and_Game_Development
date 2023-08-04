@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklairanje u canvasu</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = draw;
+
+
+        function draw() {
+
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+                let ctx = myCanvas.getContext('2d');
+
+
+
+                ctx.fillStyle = "#ff0303";
+                ctx.fillRect(80, 80, 200, 120);
+
+                ctx.save();
+
+                ctx.scale(0.5, 0.5); //sa ovim skaliramo canvas po x i y osi    //prvi parametar je x osa a drugi y osa
+                ctx.fillRect(80, 80, 200, 120);
+                //ako zelimo josjedan pravug. 
+                ctx.restore(); //sa ovim vracamo canvas na pocetnu poziciju
+                ctx.scale(0.25, 0.25);  //ovako ce biti 4x manji pravoguonik od pocetnog
+                ctx.fillRect(80, 80, 200, 120);
+
+
+                //isto moze i bet save i restore
+
+                /*
+                ctx.scale(0.5, 0.5);
+                ctx.fillRect(80, 80, 200, 120);
+
+                ctx.scale(0.5, 0.5);
+                ctx.fillRect(80, 80, 200, 120);
+
+                ctx.scale(0.5, 0.5);
+                ctx.fillRect(80, 80, 200, 120);
+
+                */
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translacija u canvasu</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = draw;
+
+
+        function draw() {
+
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+                let ctx = myCanvas.getContext('2d');
+
+                ctx.filllStyle = "#ff0303";
+                ctx.fillRect(10, 10, 120, 80);
+                ctx.save();
+
+                ctx.translate(0, 90);  //sa ovim pomjeramo canvas za 90px po y osi
+                ctx.fillRect(10, 10, 120, 80);
+
+                ctx.restore();  //sa ovim vracamo canvas na pocetnu poziciju
+                ctx.translate(0, 180); //drugi parametar je 180 a prije njega je bio 90 a to je visina kvadrata 80px + 10px razmak izmedju kvadrata
+                ctx.fillRect(10, 10, 120, 80);
+
+
+                //ovo je se moglo josnapisati i iovako bez save i restore
+
+                /*
+                ctx.translate(0, 90);
+                ctx.fillRect(10, 10, 120, 80);
+
+                ctx.translate(0, 90);
+                ctx.fillRect(10, 10, 120, 80);
+
+                ovo je isto kao i ovo gore jer sada redanje ide od vec napravljenog elementa, dok je prvi primjer uvijek sa pocetka
+                
+                */
+
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

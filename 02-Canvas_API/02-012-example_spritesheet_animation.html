@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Example - Spritesheet Animation</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+
+        window.onload = draw;
+
+        const NO_SPRITES = 9;  //broj slika u spritesheet-u
+        let spriteIndex = 0;   //indeks slike koja se prikazuje trenutno
+        let speed = 0.1; //brzina animacije
+
+        function draw() {
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+
+                let ctx = myCanvas.getContext('2d');
+
+
+                //load slike
+                let spritesheet = new Image();
+                //da bi smo dobili obavestenje kada je slika ucitana prijavljjemo se na event load
+                spritesheet.addEventListener('load', function () {
+
+                    update(ctx, spritesheet);
+
+                }, false);
+
+
+                spritesheet.src = 'runner.png';
+
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+
+
+        function update(ctx, spritesheet) {
+
+            ctx.clearRect(0, 0, 400, 300);  //brisemo sve sa platna da bi smo crtali novi frejm
+
+            ctx.drawImage(spritesheet, Math.floor(spriteIndex) * (spritesheet.width / NO_SPRITES), 0, spritesheet.width / NO_SPRITES, spritesheet.height, 25, 25, spritesheet.width / NO_SPRITES, spritesheet.height);
+            //provjera da li je sindex manji od broja sprajtova
+            if (spriteIndex < NO_SPRITES) {
+                spriteIndex = spriteIndex + speed;
+            } else { //onda ce se vratit na vrijednost 2 jer ne moze iz skoka odma stajati
+                spriteIndex = 2;
+            }
+
+            requestId = requestAnimationFrame(function () {
+                update(ctx, spritesheet);
+            });
+        }
+
+    </script>
+</body>
+
+</html>

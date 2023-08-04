@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animacija u canvasu</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+
+        //ZNACI U OVOM PRIMJERU CIJELOM PRAVIMO KRUG KJI CE HODATI SVUGDJE I KOJI CE BITI RAZLICITE VEICINE I NAKON REFRESHA NA DRUGOM MJESTU
+        window.onload = init;  //ovdje kazemo kada ucita pa ime funkcije koju zelimo pozvati tada prikazi canvas
+
+        let circleY = 60;  //promjenljiva za radius kruga
+        let circleX = 60;
+        let circleRadius = 30;  //promjenljiva za radius kruga
+        let directionX = 1;  //promjenljiva za smijer kretanja kruga
+        let directionY = 1;  //promjenljiva za smijer kretanja kruga
+        let speed = 2;  //promjenljiva za brzinu kretanja kruga
+
+
+
+
+
+        //funkcija za inicijalizaciju canvasa
+        function init() {
+
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+                let ctx = myCanvas.getContext('2d');
+
+                circleX = randomNumber(circleRadius, myCanvas.width - (circleRadius));
+                circleY = randomNumber(circleRadius, myCanvas.height - (circleRadius));
+
+
+                update(ctx);
+
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+        //logika za crtanje kruga
+        function update(ctx) {
+
+            //brisanje
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);  //brisemo sve sa canvasa
+
+
+            //ovdje trebamo prvo provjeriti da li je krug udario u zidove canvasa ili prosao ako prolazi 
+            if (circleX > ctx.canvas.width - circleRadius) {  //ovdje kazemo ako je krug prosao desnu stranu canvasa 
+                directionX = -directionX;  //ovdje kazemo da se krug pomjera  u lijevo
+            }
+            if (circleX < circleRadius) {  //ovdje kazemo ako je krug prosao lijevu stranu canvasa
+                directionX = -directionX;  //ovdje kazemo da se krug pomjera  u desno
+            }
+            if (circleY > ctx.canvas.height - circleRadius) {  //ovdje kazemo ako je krug prosao donju stranu canvasa       
+                directionY = -directionY;  //ovdje kazemo da se krug pomjera  u gore
+            }
+            if (circleY < circleRadius) {  //ovdje kazemo ako je krug prosao gornju stranu canvasa
+                directionY = -directionY;  //ovdje kazemo da se krug pomjera  u dole
+            }
+
+
+            //azuriranje pozicije kruga
+            circleX += directionX * speed;  //ovdje kazemo da se krug pomjera  u desno ii lijevo *speed
+            circleY += directionY * speed;  //ovdje kazemo da se krug pomjera gore dolje
+
+
+
+            //crtanje
+            ctx.beginPath();
+            ctx.fillStyle = "red";
+            ctx.arc(circleX, circleY, circleRadius, 0, 2 * Math.PI);
+            ctx.fill();
+
+            //logika za azuriranje smijera kretanja kruga
+
+            requestAnimationFrame(function () {
+                update(ctx);
+            });
+
+        }
+
+
+        //funkcija za random broj koji označava poziciju kruga
+
+        function randomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+
+
+    </script>
+</body>
+
+</html>

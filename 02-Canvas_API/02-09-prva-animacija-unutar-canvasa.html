@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animacija u canvasu</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = init;  //ovdje kazemo kada ucita pa ime funkcije koju zelimo pozvati tada prikazi canvas
+        let circleRadius = 60;  //promjenljiva za radius kruga
+        let translateY = 0;     //pomjeranje kruga gore dolje po y osi
+        let speed = 4;  //brzina kretanja kruga
+        let direction = 1; //smijer kretanja kruga da li gore ili dolje
+
+
+        function init() {
+
+            let myCanvas = document.getElementById("my-canvas");
+
+            if (myCanvas.getContext) {
+                let ctx = myCanvas.getContext('2d');
+
+                update(ctx);
+
+
+
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+
+        function update(ctx) {
+            //brisanje
+            ctx.clearRect(0, 0, 400, 300); //brisemo sve sto je bilo prije
+
+            //azuriranje
+            ctx.save(); //sacuvaj stanje canvasa
+            ctx.translate(0, translateY); //pomjeri krug gore dolje po y osi
+
+
+
+
+            //crtanje
+            ctx.beginPath();
+            ctx.fillStyle = "red";
+            ctx.arc(200, 60, 60, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.restore(); //vrati stanje canvasa
+
+            if (translateY > ctx.canvas.height - (circleRadius * 2)) {
+                direction *= -1; //ako je krug dosao do kraja canvasa promjeni smijer kretanja
+            } else if (translateY < 0) {
+                direction *= -1; //ako je krug dosao do kraja canvasa promjeni smijer kretanja
+            }
+
+
+
+
+            //nakon svega ovo moramo pozvati da bi se animacija nastavila
+
+            translateY += speed * direction; //pomjeri krug gore dolje po y osi
+
+            requestAnimationFrame(function () {
+                update(ctx);
+            });
+        }
+    </script>
+</body>
+
+</html>

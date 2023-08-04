@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Example - Pie Chart</title>
+    <style>
+        #my-canvas {
+            border: #cacaca 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="my-canvas" width="400" height="300">
+        Your web browser does not support canvas element.
+    </canvas>
+    <script>
+        window.onload = draw;
+        function draw() {
+            let myCanvas = document.getElementById("my-canvas");
+            if (myCanvas.getContext) {
+                var ctx = myCanvas.getContext('2d');
+                makePieChart(ctx, [10, 10, 10, 10, 40, 20]);
+            } else {
+                alert("Canvas is not supported.");
+            }
+        }
+
+
+
+
+
+        function makePieChart(ctx, shares) {  //funkcija za crtanje pie chart-a a makePieChart je funkcija koja prima dva parametra ctx i shares
+            let sum = shares.reduce((a, b) => a + b, 0);  //reduce metoda je metoda koja prima dva parametra a i b i vraca jedan rezultat a i b su elementi niza a rezultat je jedan broj
+            if (sum !== 100)   //ako suma nije 100 onda baci error tj zbir svih elemenata niza shares mora biti 100
+                throw new Error("Sum of all shares must be 100.");  //ako sum nije 100 onda baci error
+            let startAngle = 0;  //pocetni ugao je 0
+            for (let i = 0; i < shares.length; i++) {  //for petlja koja prolazi kroz sve elemente niza shares
+                let endAngle = startAngle + (Math.PI / 180) * shares[i] * 3.6;  ////krajnji ugao je pocetni ugao + (Math.PI / 180) * shares[i] * 3.6
+                ctx.beginPath();
+                ctx.arc(200, 150, 120, startAngle, endAngle);
+                ctx.lineTo(200, 150);
+                ctx.closePath();
+                ctx.stroke();
+                startAngle = endAngle;
+            }
+        }
+    </script>
+</body>
+
+</html>
