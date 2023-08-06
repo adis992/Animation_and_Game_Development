@@ -1,5 +1,7 @@
 import { Sprite } from './sprite.js';
 
+
+//OVA KLASA CE PRESTAVLJATI NEPRIJATELJA U IGRI
 export class Enemy {
 
     constructor(ctx, imageUrl) {

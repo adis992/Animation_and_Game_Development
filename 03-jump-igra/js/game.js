@@ -73,7 +73,7 @@ function init() {
             }
         }
 
-        canvas.onclick = handleUserAction;
+        canvas.onclick = handleUserAction;  //ovo je isto kao ovo iznad, samo sto je ovo za klik misa na canvas elementu
 
         loadAudio();
 
@@ -95,7 +95,7 @@ function loaded() { //funkcija kada je ucitana slika za pozadinu i tada se poziv
 
 }
 
-let running = false;
+let running = false;  //ovo smo dodali da bi se igra pokrenula tek kada se klikne na space dugme znaci ako je running funkcija u mainfunkciji true onda se poziva funkcija main
 
 
 
@@ -105,14 +105,14 @@ let running = false;
 function main(currentTime) {
     //clear, update, and draw
 
-    if (running) {
+    if (running) {  //ovo smo dodali da bi se igra pokrenula tek kada se klikne na space dugme znaci ako je running true onda se poziva funkcija main
         window.requestAnimationFrame(main); //ova funkcija radi animaciju koja se ponavlja i izvrsa se 60 puta u sekundi...kada se funkcija pozove ona sama sebe poziva
     }
 
     delta = parseInt(currentTime - previousTime);
     //delta je razlika izmedju trenutnog vremena i prethodnog vremena
     //delta nam dodje vrijeme igranja igre i ona se stalno povecava i onda se stalno poziva funkcija main i ona se stalno poziva svakih 16ms
-    speed = Math.abs(speedFactor * delta / BASE_SPEED);
+    speed = Math.abs(speedFactor * delta / BASE_SPEED);  //abs je funkcija za apsolutnu vrijednost i ona nam vraca pozitivnu vrijednost i ovo bi trebali koristiti kada bi imali negativnu brzinu
 
     clearCanvas();  //poziva se funkcija za brisanje canvasa ova ispod i ovdje dodajemo isto i za update pozivanje jer se ova funkcija cijela poziva stalno i onda se sve stalno brise i crta
     update(); //poziva se funkcija za update pozadine
@@ -191,14 +191,14 @@ function showIntroMessage(ctx) {
 
 }
 
-function handleUserAction() {
+function handleUserAction() {  //ovo je funkcija za pokretanje igre na klik misa ili na space dugme handleuseraction znaci  na bosanski jezik rukovanje korisnickom akcijom
 
-    if (!running) {
-        resetGame();
+    if (!running) {  //ako je uslov za running false onda se poziva funkcija za resetovanje igre a ! znaci da nije true
+        resetGame();  //ovo ce resetovati igru na taj nacin da ce se sve vratiti na pocetak
         window.requestAnimationFrame(main);
         runner.startRunning();
         startSound.play();
-    } else {
+    } else {    //  ako je uslov za running true onda se poziva funkcija za skok trkaca
         if (runner.jump()) {
             jumpSound.play();
         }
@@ -215,11 +215,11 @@ function loadAudio() {
     endSound = new Sound("sounds/fail.wav");
 }
 
-function Sound(src) {
-    this.sound = document.createElement("audio");
+function Sound(src) {  //ovo je konstruktor za zvuk
+    this.sound = document.createElement("audio");  //ovo je kreiranje audio elementa
     this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
+    this.sound.setAttribute("preload", "auto");   //ovo je atribut za audio element i njim se kaze da se ucita audio element automatski kada se ucita stranica
+    this.sound.setAttribute("controls", "none"); ////ovo je atribut za audio element i njim se kaze da se ne prikazuje kontrola za audio element
 
     this.play = function () {
         this.sound.play();
@@ -230,28 +230,31 @@ function Sound(src) {
 }
 
 
-function detectCollision() {
+function detectCollision() {  //ovo je funkcija za detektovanje kolizije a kolizija je kada se trkac sudari sa neprijateljem
+    //prevedeno na nas jezik kada se igra zavrsi
 
-    for (let i = 0; i < enemies.list.length; i++) {
-        if (enemies.list[i].isActive) {
+    for (let i = 0; i < enemies.list.length; i++) {  //unutar ove petlje prolazimo kroz listu neprijatelja i provjeravamo da li je neki od njih aktivan
+        if (enemies.list[i].isActive) {  //ako je neprijatelj aktivan onda se provjerava da li je doslo do toga da je igrac udario u neprijatelja ili napravio prekrsaj
 
-            let circle1 = {
-                radius: runner.Sprite.Destination.width * 0.4,
-                x: runner.Sprite.Destination.x + runner.Sprite.Destination.width / 2,
+            let circle1 = { //circle1 je objekat za trkaca
+                radius: runner.Sprite.Destination.width * 0.4,  //ovo je poluprecnik trkaca
+                x: runner.Sprite.Destination.x + runner.Sprite.Destination.width / 2,  //ovo je x koordinata trkaca gdje se nalazi
                 y: runner.Sprite.Destination.y + runner.Sprite.Destination.height / 2
             };
-            let circle2 = {
+            let circle2 = {  //circle2 je objekat za neprijatelja
                 radius: enemies.list[i].width * 0.4,
                 x: enemies.list[i].x + enemies.list[i].width / 2,
                 y: enemies.list[i].y + enemies.list[i].height / 2
             };
 
-            var dx = circle1.x - circle2.x;
-            var dy = circle1.y - circle2.y;
+            var dx = circle1.x - circle2.x;  //ovo je formula za detektovanje kolizije dx je x koordinata trkaca - x koordinata neprijatelja
+            var dy = circle1.y - circle2.y;  //ovo je formula za detektovanje kolizije dy je y koordinata trkaca - y koordinata neprijatelja
             var distance = Math.sqrt(dx * dx + dy * dy);
+            //Math.sqrt je funkcija za racunanje kvadratnog korijena ovo je PITAGORINA TEOREMA koja glasi c2 = a2 + b2
+            //dx je x koordinata trkaca - x koordinata neprijatelja, dy je y koordinata trkaca - y koordinata neprijatelja
 
-            if (distance < circle1.radius + circle2.radius) {
-                isGameOver = true;
+            if (distance < circle1.radius + circle2.radius) {  //ako je distance manja od poluprecnika trkaca + poluprecnika neprijatelja onda je doslo do sudara
+                isGameOver = true;  //game is over
             }
 
         }
@@ -269,11 +272,11 @@ function resetGame() {
 }
 
 
-let score = 0;
+let score = 0;    //ovo je varijabla za score
 
-function drawScore() {
+function drawScore() {   //ovo je funkcija za crtanje score-a
 
-    score += speed;
+    score += speed;   //+= znaci da se score povecava za speed
 
     let scoreText = "Score: " + parseInt(score);
 
@@ -286,9 +289,9 @@ function drawScore() {
 
 }
 
-let isGameOver = false;
+let isGameOver = false;  //ovo smo definisali da bi znali kada je igra zavrsena i ako je prvi put pokrenuta ne smije biti zavrsena sto je logika
 
-function gameOver() {
+function gameOver() {  //ovo je funkcija za kraj igre
 
     endSound.play();
 

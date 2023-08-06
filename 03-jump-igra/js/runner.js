@@ -1,8 +1,8 @@
 import { Sprite } from './sprite.js';
 
-export class Runner {
+export class Runner {        //ovo je klasa za trkača tacnije znaci za animaciju trkača i njegovo kretanje
 
-    constructor(ctx) {
+    constructor(ctx) {  //konstruktor je funkcija koja se poziva kada se kreira objekat klase
         this.ctx = ctx;
         this.spritesheetUrl = 'spritesheets/runner.png';
         this.gameWidth = ctx.canvas.width;
@@ -28,7 +28,7 @@ export class Runner {
     }
 
 
-    load(loadingFinished) {
+    load(loadingFinished) {  //
 
         this.spritesheet = new Image();
 
@@ -38,8 +38,8 @@ export class Runner {
             this.spriteWidth = this.spritesheet.width / this.NO_SPRITES;
 
             this.initialY = this.gameHeight - this.spriteHeight - parseInt(this.gameHeight * 0.12);
-            this.jumpY = this.initialY;
-            this.jumpLimit = this.spriteHeight * 1.2;
+            this.jumpY = this.initialY;   //ovo je pozicija trkača u vazduhu
+            this.jumpLimit = this.spriteHeight * 1.2;  //ovo je maximalna visina skoka trkača znaci koliko moze da skoci 
 
             loadingFinished();
 
@@ -52,10 +52,12 @@ export class Runner {
 
     update(speed) {
 
-        speed = 3 + speed - 3 * Math.sqrt(speed);
+        speed = 3 + speed - 3 * Math.sqrt(speed);  //ovo je brzina trkača 
 
-        switch (this.runnerState) {
+        switch (this.runnerState) {//ovo je switch case koji nam govori u kom stanju se trkač nalazi
+            //imamo 3 stanja trkača: stoji, trči i skače
 
+            //ovo je stanje kada trkač stoji
             case this.RUNNER_STATE.STANDING:
 
                 //cycle trough 2 sprites
@@ -77,7 +79,9 @@ export class Runner {
                 this.Sprite.Destination.width = this.spriteWidth;
                 this.Sprite.Destination.height = this.spriteHeight;
 
-                break;
+                break;  //break je da se ne bi izvrsavalo sledece stanje
+            //ovo je stanje kada trkač trči
+            //znaci mi smo svakom stanju odradili od kojeg do kojeg sprite-a da se izvrsava npr u runing ce biti od 2 do 5 sprite-a
             case this.RUNNER_STATE.RUNNING:
 
                 //cycle trough 4 sprites
@@ -100,44 +104,49 @@ export class Runner {
                 this.Sprite.Destination.height = this.spriteHeight;
 
                 break;
+
+
+            //ovo je stanje kada trkač skače
             case this.RUNNER_STATE.JUMPING:
 
                 //raise The Runner
-                if (this.jumpState <= this.JUMP_DURATION / 3) {
+                if (this.jumpState <= this.JUMP_DURATION / 3) {  //uslov za skok trkača , tacnije da ne moze da trajee duze od 3 sekunde
 
-                    this.currentSpriteIndex = 7;
+                    this.currentSpriteIndex = 7;  //posto imamo u spritesheetovima samo 1 uzlaznu fazu skoka i 1 silaznu fazu skoka mi smo stavili da je 7 sprite u skoku uzlazna faza skoka
+
 
                     this.Sprite.Source.x = Math.floor(this.currentSpriteIndex) * this.spriteWidth;
                     this.Sprite.Source.y = 0;
                     this.Sprite.Source.width = this.spriteWidth;
                     this.Sprite.Source.height = this.spriteHeight;
 
-                    this.jumpY = this.jumpY - Math.abs(this.jumpLimit * (1 - (this.JUMP_DURATION / 3 - this.jumpState) / (this.JUMP_DURATION / 3)));
+                    this.jumpY = this.jumpY - Math.abs(this.jumpLimit * (1 - (this.JUMP_DURATION / 3 - this.jumpState) / (this.JUMP_DURATION / 3)));  //ovo je brzina skoka
+                    //tacnije ovo je formula za brzinu skoka koja nam govori da ako je brzina skoka 1 da je onda brzina skoka 1-1/3
 
                     if (this.jumpY < this.initialY - this.jumpLimit) {
                         this.jumpY = this.initialY - this.jumpLimit;
                     }
 
 
-                    //raise up the Runner
+                    //raise up the Runner, postavljamo poziciju trkača na ekranu spremnu za skok
                     this.Sprite.Destination.x = 25;
                     this.Sprite.Destination.y = this.jumpY;
                     this.Sprite.Destination.width = this.spriteWidth;
                     this.Sprite.Destination.height = this.spriteHeight;
 
 
-                    //hold
+                    //hold ovdje cekamo da trkač bude u vazduhu
                 } else if (this.jumpState > this.JUMP_DURATION / 3 && this.jumpState < this.JUMP_DURATION / 3 * 2) {
 
 
-                    this.jumpY = this.initialY - this.jumpLimit;
+                    this.jumpY = this.initialY - this.jumpLimit;  //ovo je pozicija trkača u vazduhu
 
                     this.Sprite.Destination.x = 25;
                     this.Sprite.Destination.y = this.jumpY;
                     this.Sprite.Destination.width = this.spriteWidth;
                     this.Sprite.Destination.height = this.spriteHeight;
 
-                    //low down The Runner
+                    //low down The Runner //ovo je kada trkač pada
                 } else if (this.jumpState >= this.JUMP_DURATION / 3 * 2 && this.jumpState < this.JUMP_DURATION) {
                     //set second jump frame
 
@@ -168,14 +177,14 @@ export class Runner {
                     this.runnerState = this.RUNNER_STATE.RUNNING;
                 }
 
-                this.jumpState += speed;
+                this.jumpState += speed;   //ovo je brzina skoka
                 break;
 
         }
 
     }
 
-    draw() {
+    draw() {  //ovo je funkcija za crtanje trkača
         this.ctx.drawImage(this.spritesheet,
             this.Sprite.Source.x,
             this.Sprite.Source.y,
@@ -187,8 +196,8 @@ export class Runner {
             this.Sprite.Destination.height);
     }
 
-    jump() {
-        if (this.runnerState == this.RUNNER_STATE.RUNNING) {
+    jump() {   //ovo je funkcija za skok trkača i ona nam govori da ako je trkač u stanju trčanja da može da skoči
+        if (this.runnerState == this.RUNNER_STATE.RUNNING) {    //=== je operator za poredjenje
             this.runnerState = this.RUNNER_STATE.JUMPING;
             return true;
         }
@@ -196,12 +205,12 @@ export class Runner {
         return false;
     }
 
-    startRunning() {
-        this.currentSpriteIndex = 2;
-        this.runnerState = this.RUNNER_STATE.RUNNING;
+    startRunning() {   //ovo je funkcija za pokretanje trkača
+        this.currentSpriteIndex = 2;   //dajemo mu da krene od drugog sprite-a
+        this.runnerState = this.RUNNER_STATE.RUNNING;  //dajemo mu da je u stanju trčanja
     }
 
-    stopRunning() {
+    stopRunning() {   //ovo je funkcija za zaustavljanje trkača
         this.currentSpriteIndex = 0;
         this.runnerState = this.RUNNER_STATE.STANDING;
     }
